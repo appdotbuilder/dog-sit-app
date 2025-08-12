@@ -35,8 +35,8 @@ const mockSitters: SitterListing[] = [
   {
     id: 1,
     sitter_id: 2,
-    title: '🐕 Professional Dog Walker & Pet Sitter',
-    description: 'Experienced dog walker with 5+ years of caring for dogs of all sizes. I provide daily walks, feeding, and lots of love!',
+    title: 'Professional Dog Walker & Pet Sitter',
+    description: 'Experienced dog walker with 5+ years of caring for dogs of all sizes. I provide daily walks, feeding, and comprehensive pet care services.',
     services_offered: ['dog_walking', 'pet_sitting'],
     price_per_hour: 25,
     price_per_day: 150,
@@ -56,8 +56,8 @@ const mockSitters: SitterListing[] = [
   {
     id: 2,
     sitter_id: 3,
-    title: '🏡 Home-Based Dog Daycare with Yard',
-    description: 'Your furry friends will love our spacious backyard! We offer daycare, overnight stays, and personalized attention.',
+    title: 'Home-Based Dog Daycare with Yard',
+    description: 'Your pets will enjoy our spacious backyard facility. We offer daycare, overnight stays, and personalized attention in a safe environment.',
     services_offered: ['daycare', 'overnight_care', 'pet_sitting'],
     price_per_hour: 20,
     price_per_day: 120,
@@ -77,8 +77,8 @@ const mockSitters: SitterListing[] = [
   {
     id: 3,
     sitter_id: 4,
-    title: '✨ Luxury Pet Care & Grooming',
-    description: 'Premium pet care services including grooming, walks, and overnight care. Your pets deserve the best!',
+    title: 'Premium Pet Care & Grooming Services',
+    description: 'Professional pet care services including grooming, walks, and overnight care. Certified and insured for your peace of mind.',
     services_offered: ['pet_sitting', 'grooming', 'overnight_care'],
     price_per_hour: 35,
     price_per_day: 200,
@@ -149,18 +149,6 @@ function App() {
     }
   }, [searchLocation]);
 
-  const getTabIcon = (tab: string) => {
-    switch (tab) {
-      case 'discover': return '🔍';
-      case 'my-dogs': return '🐕';
-      case 'bookings': return '📅';
-      case 'messages': return '💬';
-      case 'profile': return '👤';
-      case 'my-listings': return '📝';
-      default: return '';
-    }
-  };
-
   const getWelcomeMessage = () => {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good morning';
@@ -169,31 +157,31 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl">🐕</div>
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <div className="text-white text-lg font-bold">P</div>
+              </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  PawPal
-                </h1>
-                <p className="text-sm text-gray-500">Your trusted dog sitting platform</p>
+                <h1 className="text-xl font-semibold text-slate-900">PawPal</h1>
+                <p className="text-sm text-slate-500">Professional Pet Care</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-4">
               <div className="hidden md:block text-right">
-                <p className="text-sm font-medium text-gray-700">
-                  {getWelcomeMessage()}, {currentUser.first_name}! 👋
+                <p className="text-sm font-medium text-slate-700">
+                  {getWelcomeMessage()}, {currentUser.first_name}
                 </p>
-                <p className="text-xs text-gray-500">{currentUser.location}</p>
+                <p className="text-xs text-slate-500">{currentUser.location}</p>
               </div>
-              <Avatar className="h-10 w-10 border-2 border-blue-200">
+              <Avatar className="h-9 w-9 border border-slate-200">
                 <AvatarImage src={currentUser.profile_image_url || undefined} />
-                <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+                <AvatarFallback className="bg-slate-100 text-slate-600 text-sm font-medium">
                   {currentUser.first_name[0]}{currentUser.last_name[0]}
                 </AvatarFallback>
               </Avatar>
@@ -203,56 +191,76 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 bg-white/70 backdrop-blur-sm">
-            <TabsTrigger value="discover" className="space-x-2">
-              <span>{getTabIcon('discover')}</span>
+      <main className="container mx-auto px-6 py-8">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+          <TabsList className="grid w-full grid-cols-6 bg-white border border-slate-200 p-1">
+            <TabsTrigger 
+              value="discover" 
+              className="text-sm font-medium data-[state=active]:bg-slate-100 data-[state=active]:text-slate-900"
+            >
+              <span className="mr-2">🔍</span>
               <span className="hidden sm:inline">Discover</span>
             </TabsTrigger>
-            <TabsTrigger value="my-dogs" className="space-x-2">
-              <span>{getTabIcon('my-dogs')}</span>
+            <TabsTrigger 
+              value="my-dogs"
+              className="text-sm font-medium data-[state=active]:bg-slate-100 data-[state=active]:text-slate-900"
+            >
+              <span className="mr-2">🐕</span>
               <span className="hidden sm:inline">My Dogs</span>
             </TabsTrigger>
-            <TabsTrigger value="bookings" className="space-x-2">
-              <span>{getTabIcon('bookings')}</span>
+            <TabsTrigger 
+              value="bookings"
+              className="text-sm font-medium data-[state=active]:bg-slate-100 data-[state=active]:text-slate-900"
+            >
+              <span className="mr-2">📅</span>
               <span className="hidden sm:inline">Bookings</span>
             </TabsTrigger>
-            <TabsTrigger value="messages" className="space-x-2">
-              <span>{getTabIcon('messages')}</span>
+            <TabsTrigger 
+              value="messages"
+              className="text-sm font-medium data-[state=active]:bg-slate-100 data-[state=active]:text-slate-900"
+            >
+              <span className="mr-2">💬</span>
               <span className="hidden sm:inline">Messages</span>
             </TabsTrigger>
-            <TabsTrigger value="my-listings" className="space-x-2">
-              <span>{getTabIcon('my-listings')}</span>
+            <TabsTrigger 
+              value="my-listings"
+              className="text-sm font-medium data-[state=active]:bg-slate-100 data-[state=active]:text-slate-900"
+            >
+              <span className="mr-2">📝</span>
               <span className="hidden sm:inline">Listings</span>
             </TabsTrigger>
-            <TabsTrigger value="profile" className="space-x-2">
-              <span>{getTabIcon('profile')}</span>
+            <TabsTrigger 
+              value="profile"
+              className="text-sm font-medium data-[state=active]:bg-slate-100 data-[state=active]:text-slate-900"
+            >
+              <span className="mr-2">👤</span>
               <span className="hidden sm:inline">Profile</span>
             </TabsTrigger>
           </TabsList>
 
           {/* Discover Tab */}
-          <TabsContent value="discover" className="space-y-6">
-            <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <span>🔍</span>
-                  <span>Find the Perfect Pet Sitter</span>
+          <TabsContent value="discover" className="space-y-8">
+            <Card className="border border-slate-200 shadow-sm">
+              <CardHeader className="border-b border-slate-100">
+                <CardTitle className="text-lg font-semibold text-slate-900">
+                  Find Professional Pet Sitters
                 </CardTitle>
-                <CardDescription>
-                  Discover trusted dog sitters in your area. Search by location, services, and more.
+                <CardDescription className="text-sm text-slate-600">
+                  Discover trusted and verified pet care professionals in your area.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex space-x-2">
+              <CardContent className="p-6">
+                <div className="flex gap-3">
                   <Input
-                    placeholder="Enter your location (e.g., Manhattan, NY)"
+                    placeholder="Enter location (e.g., Manhattan, NY)"
                     value={searchLocation}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchLocation(e.target.value)}
-                    className="flex-1 bg-white/50"
+                    className="flex-1 border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                   />
-                  <Button onClick={handleSearch} className="px-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
+                  <Button 
+                    onClick={handleSearch} 
+                    className="px-6 bg-blue-600 hover:bg-blue-700 text-white border-0"
+                  >
                     Search
                   </Button>
                 </div>
@@ -266,24 +274,33 @@ function App() {
                 <SitterCard key={sitter.id} sitter={sitter} />
               ))}
               {sitters.length === 0 && (
-                <div className="col-span-full text-center py-12">
-                  <div className="text-6xl mb-4">🐕</div>
-                  <h3 className="text-lg font-semibold text-gray-600 mb-2">No sitters found</h3>
-                  <p className="text-gray-500">Try adjusting your search criteria or location.</p>
+                <div className="col-span-full">
+                  <div className="empty-state">
+                    <div className="empty-state-icon">🔍</div>
+                    <h3 className="empty-state-title">No sitters found</h3>
+                    <p className="empty-state-description">
+                      Try adjusting your search criteria or location to find available pet sitters.
+                    </p>
+                    <Button 
+                      onClick={() => setSearchLocation('')}
+                      className="btn-secondary"
+                    >
+                      Clear Search
+                    </Button>
+                  </div>
                 </div>
               )}
             </div>
           </TabsContent>
 
           {/* My Dogs Tab */}
-          <TabsContent value="my-dogs" className="space-y-6">
-            <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <span>🐕</span>
-                  <span>My Dogs</span>
+          <TabsContent value="my-dogs" className="space-y-8">
+            <Card className="border border-slate-200 shadow-sm">
+              <CardHeader className="border-b border-slate-100">
+                <CardTitle className="text-lg font-semibold text-slate-900">
+                  My Dogs
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm text-slate-600">
                   Manage your dogs' profiles and information.
                 </CardDescription>
               </CardHeader>
@@ -293,44 +310,45 @@ function App() {
               {dogs.map((dog: Dog) => (
                 <DogProfile key={dog.id} dog={dog} />
               ))}
-              <Card className="bg-white/50 backdrop-blur-sm border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer">
-                <CardContent className="flex flex-col items-center justify-center p-8 text-center">
-                  <div className="text-4xl mb-4">➕</div>
-                  <h3 className="font-semibold text-gray-700 mb-2">Add a New Dog</h3>
-                  <p className="text-sm text-gray-500">Create a profile for your furry friend</p>
+              <Card className="border-2 border-dashed border-slate-300 hover:border-slate-400 transition-colors cursor-pointer">
+                <CardContent className="flex flex-col items-center justify-center p-8 text-center min-h-[200px]">
+                  <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                    <span className="text-xl text-slate-400">+</span>
+                  </div>
+                  <h3 className="font-medium text-slate-700 mb-2">Add a New Dog</h3>
+                  <p className="text-sm text-slate-500">Create a profile for your pet</p>
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
 
           {/* Bookings Tab */}
-          <TabsContent value="bookings" className="space-y-6">
-            <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <span>📅</span>
-                  <span>My Bookings</span>
+          <TabsContent value="bookings" className="space-y-8">
+            <Card className="border border-slate-200 shadow-sm">
+              <CardHeader className="border-b border-slate-100">
+                <CardTitle className="text-lg font-semibold text-slate-900">
+                  My Bookings
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm text-slate-600">
                   View and manage your pet sitting appointments.
                 </CardDescription>
               </CardHeader>
             </Card>
 
             {bookings.length === 0 ? (
-              <Card className="bg-white/50 backdrop-blur-sm border-0">
-                <CardContent className="text-center py-12">
-                  <div className="text-6xl mb-4">📅</div>
-                  <h3 className="text-lg font-semibold text-gray-600 mb-2">No bookings yet</h3>
-                  <p className="text-gray-500 mb-4">Start by finding a pet sitter in the Discover tab.</p>
-                  <Button 
-                    onClick={() => setActiveTab('discover')}
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
-                  >
-                    Find a Sitter
-                  </Button>
-                </CardContent>
-              </Card>
+              <div className="empty-state">
+                <div className="empty-state-icon">📅</div>
+                <h3 className="empty-state-title">No bookings yet</h3>
+                <p className="empty-state-description">
+                  Start by finding a pet sitter in the Discover tab to create your first booking.
+                </p>
+                <Button 
+                  onClick={() => setActiveTab('discover')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Find a Sitter
+                </Button>
+              </div>
             ) : (
               <div className="space-y-4">
                 {bookings.map((booking: Booking) => (
@@ -341,36 +359,44 @@ function App() {
           </TabsContent>
 
           {/* Messages Tab */}
-          <TabsContent value="messages" className="space-y-6">
-            <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <span>💬</span>
-                  <span>Messages</span>
+          <TabsContent value="messages" className="space-y-8">
+            <Card className="border border-slate-200 shadow-sm">
+              <CardHeader className="border-b border-slate-100">
+                <CardTitle className="text-lg font-semibold text-slate-900">
+                  Messages
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm text-slate-600">
                   Communicate with pet sitters and owners.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="text-center py-12">
-                <div className="text-6xl mb-4">💬</div>
-                <h3 className="text-lg font-semibold text-gray-600 mb-2">No messages yet</h3>
-                <p className="text-gray-500">Messages with sitters will appear here after booking.</p>
-              </CardContent>
             </Card>
+
+            <div className="empty-state">
+              <div className="empty-state-icon">💬</div>
+              <h3 className="empty-state-title">No messages yet</h3>
+              <p className="empty-state-description">
+                Messages with sitters will appear here once you start booking services.
+              </p>
+            </div>
           </TabsContent>
 
           {/* My Listings Tab (for sitters) */}
-          <TabsContent value="my-listings" className="space-y-6">
+          <TabsContent value="my-listings" className="space-y-8">
             {currentUser.role === 'sitter' || currentUser.role === 'both' ? (
               <CreateSitterListing userId={currentUser.id} />
             ) : (
-              <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
-                <CardContent className="text-center py-12">
-                  <div className="text-6xl mb-4">📝</div>
-                  <h3 className="text-lg font-semibold text-gray-600 mb-2">Become a Pet Sitter</h3>
-                  <p className="text-gray-500 mb-4">Switch to sitter mode to create service listings.</p>
-                  <Button className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600">
+              <Card className="border border-slate-200 shadow-sm">
+                <CardContent className="text-center py-16">
+                  <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="text-2xl text-slate-400">📝</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-3">
+                    Become a Pet Sitter
+                  </h3>
+                  <p className="text-slate-600 mb-6 max-w-md mx-auto">
+                    Switch to sitter mode to create service listings and start earning by caring for pets.
+                  </p>
+                  <Button className="bg-green-600 hover:bg-green-700 text-white">
                     Become a Sitter
                   </Button>
                 </CardContent>
@@ -379,7 +405,7 @@ function App() {
           </TabsContent>
 
           {/* Profile Tab */}
-          <TabsContent value="profile" className="space-y-6">
+          <TabsContent value="profile" className="space-y-8">
             <UserProfile user={currentUser} />
           </TabsContent>
         </Tabs>

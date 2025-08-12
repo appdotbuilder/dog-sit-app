@@ -126,132 +126,134 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <span>📝</span>
+    <div className="space-y-8">
+      <Card className="border border-slate-200 shadow-sm">
+        <CardHeader className="border-b border-slate-100">
+          <CardTitle className="text-lg font-semibold text-slate-900 flex items-center space-x-2">
+            <span className="w-5 h-5 text-lg">📝</span>
             <span>Create Sitter Listing</span>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <CardContent className="pt-6">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* Basic Information */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                <span>📋</span>
+            <div className="space-y-5">
+              <h3 className="font-semibold text-slate-800 flex items-center space-x-2 text-base">
+                <span className="w-5 h-5 text-base">📋</span>
                 <span>Basic Information</span>
               </h3>
               
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Listing Title</label>
+                <label className="text-sm font-medium text-slate-700">Listing Title</label>
                 <Input
                   value={formData.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setFormData((prev: CreateSitterListingInput) => ({ ...prev, title: e.target.value }))
                   }
-                  placeholder="e.g., Experienced Dog Walker & Pet Lover"
-                  className="bg-white/50"
+                  placeholder="e.g., Experienced Dog Walker & Pet Care Professional"
+                  className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Description</label>
+                <label className="text-sm font-medium text-slate-700">Description</label>
                 <Textarea
                   value={formData.description}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                     setFormData((prev: CreateSitterListingInput) => ({ ...prev, description: e.target.value }))
                   }
-                  placeholder="Describe your experience, what makes you special, and how you'll care for pets..."
+                  placeholder="Describe your experience, qualifications, and approach to pet care..."
                   rows={4}
-                  className="bg-white/50"
+                  className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Location</label>
+                <label className="text-sm font-medium text-slate-700">Location</label>
                 <Input
                   value={formData.location}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setFormData((prev: CreateSitterListingInput) => ({ ...prev, location: e.target.value }))
                   }
                   placeholder="e.g., Brooklyn, NY"
-                  className="bg-white/50"
+                  className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                   required
                 />
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-slate-100" />
 
             {/* Services Offered */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                <span>🛠️</span>
+            <div className="space-y-5">
+              <h3 className="font-semibold text-slate-800 flex items-center space-x-2 text-base">
+                <span className="w-5 h-5 text-base">🛠️</span>
                 <span>Services Offered</span>
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {serviceTypes.map((service) => (
-                  <div key={service.value} className="flex items-start space-x-3 p-3 rounded-lg border border-gray-200 bg-white/30">
+                  <div key={service.value} className="flex items-start space-x-3 p-4 rounded-md border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors">
                     <Checkbox
                       id={service.value}
                       checked={formData.services_offered.includes(service.value)}
                       onCheckedChange={(checked: boolean) => handleServiceChange(service.value, checked)}
+                      className="border-slate-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 mt-0.5"
                     />
                     <div className="flex-1">
-                      <label htmlFor={service.value} className="text-sm font-medium cursor-pointer flex items-center space-x-2">
-                        <span>{service.icon}</span>
+                      <label htmlFor={service.value} className="text-sm font-medium cursor-pointer flex items-center space-x-2 text-slate-900">
+                        <span className="text-base">{service.icon}</span>
                         <span>{service.label}</span>
                       </label>
-                      <p className="text-xs text-gray-500 mt-1">{service.description}</p>
+                      <p className="text-xs text-slate-600 mt-1">{service.description}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-slate-100" />
 
             {/* Dog Sizes */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                <span>🐕</span>
+            <div className="space-y-5">
+              <h3 className="font-semibold text-slate-800 flex items-center space-x-2 text-base">
+                <span className="w-5 h-5 text-base">🐕</span>
                 <span>Dog Sizes Accepted</span>
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {dogSizes.map((size) => (
-                  <div key={size.value} className="flex items-start space-x-2 p-3 rounded-lg border border-gray-200 bg-white/30">
+                  <div key={size.value} className="flex items-start space-x-2 p-4 rounded-md border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors">
                     <Checkbox
                       id={size.value}
                       checked={formData.accepts_sizes.includes(size.value)}
                       onCheckedChange={(checked: boolean) => handleSizeChange(size.value, checked)}
+                      className="border-slate-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 mt-0.5"
                     />
                     <div className="flex-1">
-                      <label htmlFor={size.value} className="text-sm font-medium cursor-pointer flex items-center space-x-2">
-                        <span>{size.icon}</span>
+                      <label htmlFor={size.value} className="text-sm font-medium cursor-pointer flex items-center space-x-2 text-slate-900">
+                        <span className="text-base">{size.icon}</span>
                         <span>{size.label}</span>
                       </label>
-                      <p className="text-xs text-gray-500 mt-1">{size.description}</p>
+                      <p className="text-xs text-slate-600 mt-1">{size.description}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-slate-100" />
 
             {/* Pricing */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                <span>💰</span>
+            <div className="space-y-5">
+              <h3 className="font-semibold text-slate-800 flex items-center space-x-2 text-base">
+                <span className="w-5 h-5 text-base">💰</span>
                 <span>Pricing</span>
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Price per Hour</label>
+                  <label className="text-sm font-medium text-slate-700">Price per Hour</label>
                   <Input
                     type="number"
                     value={formData.price_per_hour}
@@ -263,13 +265,13 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
                     }
                     min="5"
                     step="0.50"
-                    className="bg-white/50"
+                    className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Price per Day (optional)</label>
+                  <label className="text-sm font-medium text-slate-700">Price per Day (optional)</label>
                   <Input
                     type="number"
                     value={formData.price_per_day || ''}
@@ -282,12 +284,12 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
                     min="20"
                     step="5"
                     placeholder="Optional"
-                    className="bg-white/50"
+                    className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Price per Night (optional)</label>
+                  <label className="text-sm font-medium text-slate-700">Price per Night (optional)</label>
                   <Input
                     type="number"
                     value={formData.price_per_night || ''}
@@ -300,26 +302,31 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
                     min="30"
                     step="5"
                     placeholder="Optional"
-                    className="bg-white/50"
+                    className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-slate-100" />
 
             {/* Capacity & Experience */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                <span>📊</span>
+            <div className="space-y-5">
+              <h3 className="font-semibold text-slate-800 flex items-center space-x-2 text-base">
+                <span className="w-5 h-5 text-base">📊</span>
                 <span>Capacity & Experience</span>
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-gray-700">Maximum Dogs</label>
-                    <Badge variant="outline">{formData.max_dogs} dogs</Badge>
+                    <label className="text-sm font-medium text-slate-700">Maximum Dogs</label>
+                    <Badge 
+                      variant="outline" 
+                      className="border-slate-200 text-slate-600 bg-slate-50 text-xs"
+                    >
+                      {formData.max_dogs} dogs
+                    </Badge>
                   </div>
                   <Slider
                     value={[formData.max_dogs]}
@@ -331,7 +338,7 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
                     step={1}
                     className="w-full"
                   />
-                  <div className="flex justify-between text-xs text-gray-500">
+                  <div className="flex justify-between text-xs text-slate-500">
                     <span>1 dog</span>
                     <span>10 dogs</span>
                   </div>
@@ -339,8 +346,13 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-gray-700">Years of Experience</label>
-                    <Badge variant="outline">{formData.experience_years} years</Badge>
+                    <label className="text-sm font-medium text-slate-700">Years of Experience</label>
+                    <Badge 
+                      variant="outline" 
+                      className="border-slate-200 text-slate-600 bg-slate-50 text-xs"
+                    >
+                      {formData.experience_years} years
+                    </Badge>
                   </div>
                   <Slider
                     value={[formData.experience_years]}
@@ -352,7 +364,7 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
                     step={1}
                     className="w-full"
                   />
-                  <div className="flex justify-between text-xs text-gray-500">
+                  <div className="flex justify-between text-xs text-slate-500">
                     <span>0 years</span>
                     <span>20+ years</span>
                   </div>
@@ -361,8 +373,13 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
 
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">Service Radius</label>
-                  <Badge variant="outline">{formData.radius_km} km</Badge>
+                  <label className="text-sm font-medium text-slate-700">Service Radius</label>
+                  <Badge 
+                    variant="outline" 
+                    className="border-slate-200 text-slate-600 bg-slate-50 text-xs"
+                  >
+                    {formData.radius_km} km
+                  </Badge>
                 </div>
                 <Slider
                   value={[formData.radius_km]}
@@ -374,52 +391,56 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
                   step={1}
                   className="w-full"
                 />
-                <div className="flex justify-between text-xs text-gray-500">
+                <div className="flex justify-between text-xs text-slate-500">
                   <span>1 km</span>
                   <span>50 km</span>
                 </div>
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-slate-100" />
 
             {/* Additional Information */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                <span>ℹ️</span>
+            <div className="space-y-5">
+              <h3 className="font-semibold text-slate-800 flex items-center space-x-2 text-base">
+                <span className="w-5 h-5 text-base">ℹ️</span>
                 <span>Additional Information</span>
               </h3>
               
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
                   <Checkbox
                     id="has-yard"
                     checked={formData.has_yard}
                     onCheckedChange={(checked: boolean) =>
                       setFormData((prev: CreateSitterListingInput) => ({ ...prev, has_yard: checked }))
                     }
+                    className="border-slate-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                   />
-                  <label htmlFor="has-yard" className="text-sm cursor-pointer">
-                    🏡 I have a secure yard for dogs to play
+                  <label htmlFor="has-yard" className="text-sm cursor-pointer text-slate-700 flex items-center space-x-2">
+                    <span>🏡</span>
+                    <span>I have a secure yard for dogs to play</span>
                   </label>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   <Checkbox
                     id="has-insurance"
                     checked={formData.has_insurance}
                     onCheckedChange={(checked: boolean) =>
                       setFormData((prev: CreateSitterListingInput) => ({ ...prev, has_insurance: checked }))
                     }
+                    className="border-slate-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                   />
-                  <label htmlFor="has-insurance" className="text-sm cursor-pointer">
-                    🛡️ I have pet care insurance
+                  <label htmlFor="has-insurance" className="text-sm cursor-pointer text-slate-700 flex items-center space-x-2">
+                    <span>🛡️</span>
+                    <span>I have pet care insurance</span>
                   </label>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Emergency Contact (optional)</label>
+                <label className="text-sm font-medium text-slate-700">Emergency Contact (optional)</label>
                 <Input
                   value={formData.emergency_contact || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -429,19 +450,29 @@ export function CreateSitterListing({ userId }: CreateSitterListingProps) {
                     }))
                   }
                   placeholder="Emergency contact number"
-                  className="bg-white/50"
+                  className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
                 />
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-slate-100" />
 
             <Button
               type="submit"
               disabled={isCreating || formData.services_offered.length === 0 || formData.accepts_sizes.length === 0}
-              className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3"
             >
-              {isCreating ? 'Creating Listing...' : '🚀 Create Sitter Listing'}
+              {isCreating ? (
+                <>
+                  <span className="mr-2">⏳</span>
+                  Creating Listing...
+                </>
+              ) : (
+                <>
+                  <span className="mr-2">🚀</span>
+                  Create Sitter Listing
+                </>
+              )}
             </Button>
           </form>
         </CardContent>

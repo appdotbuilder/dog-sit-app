@@ -66,23 +66,27 @@ export function SearchFilters() {
   }, 0);
 
   return (
-    <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
-      <CardHeader className="pb-3">
+    <Card className="border border-slate-200 shadow-sm">
+      <CardHeader className="border-b border-slate-100 pb-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center space-x-2">
-            <span>🎯</span>
-            <span>Search Filters</span>
+          <div className="flex items-center space-x-3">
+            <CardTitle className="text-lg font-semibold text-slate-900">
+              Search Filters
+            </CardTitle>
             {activeFiltersCount > 0 && (
-              <Badge variant="secondary" className="ml-2">
+              <Badge 
+                variant="secondary" 
+                className="bg-blue-50 text-blue-700 border-blue-200 text-xs font-medium"
+              >
                 {activeFiltersCount} active
               </Badge>
             )}
-          </CardTitle>
+          </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setShowFilters(!showFilters)}
-            className="text-sm"
+            className="text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50"
           >
             {showFilters ? 'Hide Filters' : 'Show Filters'}
           </Button>
@@ -90,24 +94,24 @@ export function SearchFilters() {
       </CardHeader>
 
       {showFilters && (
-        <CardContent className="space-y-6">
+        <CardContent className="pt-6 space-y-6">
           {/* Service Type */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Service Type</label>
+            <label className="text-sm font-medium text-slate-700">Service Type</label>
             <Select
               value={filters.serviceType}
               onValueChange={(value: ServiceType | 'all') =>
                 setFilters((prev: FilterState) => ({ ...prev, serviceType: value }))
               }
             >
-              <SelectTrigger className="bg-white/50">
+              <SelectTrigger className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
                 <SelectValue placeholder="Select service type" />
               </SelectTrigger>
               <SelectContent>
                 {serviceTypes.map((service) => (
                   <SelectItem key={service.value} value={service.value}>
                     <div className="flex items-center space-x-2">
-                      <span>{service.icon}</span>
+                      <span className="text-sm">{service.icon}</span>
                       <span>{service.label}</span>
                     </div>
                   </SelectItem>
@@ -118,21 +122,21 @@ export function SearchFilters() {
 
           {/* Dog Size */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">Dog Size</label>
+            <label className="text-sm font-medium text-slate-700">Dog Size</label>
             <Select
               value={filters.dogSize}
               onValueChange={(value: DogSize | 'all') =>
                 setFilters((prev: FilterState) => ({ ...prev, dogSize: value }))
               }
             >
-              <SelectTrigger className="bg-white/50">
+              <SelectTrigger className="border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
                 <SelectValue placeholder="Select dog size" />
               </SelectTrigger>
               <SelectContent>
                 {dogSizes.map((size) => (
                   <SelectItem key={size.value} value={size.value}>
                     <div className="flex items-center space-x-2">
-                      <span>{size.icon}</span>
+                      <span className="text-sm">{size.icon}</span>
                       <span>{size.label}</span>
                     </div>
                   </SelectItem>
@@ -142,10 +146,15 @@ export function SearchFilters() {
           </div>
 
           {/* Price Range */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-700">Max Price per Hour</label>
-              <Badge variant="outline">${filters.maxPrice}</Badge>
+              <label className="text-sm font-medium text-slate-700">Max Price per Hour</label>
+              <Badge 
+                variant="outline" 
+                className="border-slate-200 text-slate-600 bg-slate-50 text-xs"
+              >
+                ${filters.maxPrice}
+              </Badge>
             </div>
             <Slider
               value={[filters.maxPrice]}
@@ -157,17 +166,22 @@ export function SearchFilters() {
               step={5}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-gray-500">
+            <div className="flex justify-between text-xs text-slate-500">
               <span>$10</span>
               <span>$100</span>
             </div>
           </div>
 
           {/* Experience */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-700">Minimum Experience</label>
-              <Badge variant="outline">{filters.minExperience} years</Badge>
+              <label className="text-sm font-medium text-slate-700">Minimum Experience</label>
+              <Badge 
+                variant="outline" 
+                className="border-slate-200 text-slate-600 bg-slate-50 text-xs"
+              >
+                {filters.minExperience} years
+              </Badge>
             </div>
             <Slider
               value={[filters.minExperience]}
@@ -179,38 +193,42 @@ export function SearchFilters() {
               step={1}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-gray-500">
+            <div className="flex justify-between text-xs text-slate-500">
               <span>0 years</span>
               <span>10+ years</span>
             </div>
           </div>
 
           {/* Additional Options */}
-          <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-700">Additional Requirements</label>
-            <div className="space-y-2">
-              <div className="flex items-center space-x-2">
+          <div className="space-y-4">
+            <label className="text-sm font-medium text-slate-700">Additional Requirements</label>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
                 <Checkbox
                   id="has-yard"
                   checked={filters.hasYard}
                   onCheckedChange={(checked: boolean) =>
                     setFilters((prev: FilterState) => ({ ...prev, hasYard: checked }))
                   }
+                  className="border-slate-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                 />
-                <label htmlFor="has-yard" className="text-sm cursor-pointer">
-                  🏡 Has a yard
+                <label htmlFor="has-yard" className="text-sm text-slate-700 cursor-pointer flex items-center space-x-2">
+                  <span>🏡</span>
+                  <span>Has a yard</span>
                 </label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <Checkbox
                   id="has-insurance"
                   checked={filters.hasInsurance}
                   onCheckedChange={(checked: boolean) =>
                     setFilters((prev: FilterState) => ({ ...prev, hasInsurance: checked }))
                   }
+                  className="border-slate-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                 />
-                <label htmlFor="has-insurance" className="text-sm cursor-pointer">
-                  🛡️ Has pet insurance
+                <label htmlFor="has-insurance" className="text-sm text-slate-700 cursor-pointer flex items-center space-x-2">
+                  <span>🛡️</span>
+                  <span>Has pet insurance</span>
                 </label>
               </div>
             </div>
@@ -218,13 +236,15 @@ export function SearchFilters() {
 
           {/* Clear Filters */}
           {activeFiltersCount > 0 && (
-            <Button
-              variant="outline"
-              onClick={clearFilters}
-              className="w-full"
-            >
-              Clear All Filters
-            </Button>
+            <div className="pt-4 border-t border-slate-100">
+              <Button
+                variant="outline"
+                onClick={clearFilters}
+                className="w-full border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
+              >
+                Clear All Filters
+              </Button>
+            </div>
           )}
         </CardContent>
       )}
