@@ -1,8 +1,23 @@
+import { db } from '../db';
+import { bookingsTable } from '../db/schema';
+import { eq } from 'drizzle-orm';
 import { type Booking } from '../schema';
 
 export const getBookingsByOwner = async (ownerId: number): Promise<Booking[]> => {
-    // This is a placeholder declaration! Real code should be implemented here.
-    // The goal of this handler is fetching all bookings made by a specific owner from the database.
-    // Should include related data like sitter info, dog info, and listing details for display.
-    return Promise.resolve([]);
+  try {
+    const results = await db.select()
+      .from(bookingsTable)
+      .where(eq(bookingsTable.owner_id, ownerId))
+      .execute();
+
+    // Convert numeric fields back to numbers before returning
+    return results.map(booking => ({
+      ...booking,
+      total_hours: booking.total_hours ? parseFloat(booking.total_hours) : null,
+      total_price: parseFloat(booking.total_price)
+    }));
+  } catch (error) {
+    console.error('Failed to fetch bookings by owner:', error);
+    throw error;
+  }
 };

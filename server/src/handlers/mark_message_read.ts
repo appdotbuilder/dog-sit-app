@@ -1,16 +1,30 @@
+import { db } from '../db';
+import { messagesTable } from '../db/schema';
 import { type MarkMessageReadInput, type Message } from '../schema';
+import { eq } from 'drizzle-orm';
 
 export const markMessageRead = async (input: MarkMessageReadInput): Promise<Message> => {
-    // This is a placeholder declaration! Real code should be implemented here.
-    // The goal of this handler is marking a message as read in the database.
-    // Should validate that the user has permission to mark this message as read (is the receiver).
-    return Promise.resolve({
-        id: input.id,
-        booking_id: 1, // Placeholder
-        sender_id: 1, // Placeholder
-        receiver_id: 2, // Placeholder
-        content: 'Message content',
-        is_read: true,
-        created_at: new Date()
-    } as Message);
+  try {
+    // Update the message to mark it as read
+    const result = await db.update(messagesTable)
+      .set({
+        is_read: true
+      })
+      .where(eq(messagesTable.id, input.id))
+      .returning()
+      .execute();
+
+    if (result.length === 0) {
+      throw new Error(`Message with id ${input.id} not found`);
+    }
+
+    const message = result[0];
+    return {
+      ...message,
+      created_at: message.created_at
+    };
+  } catch (error) {
+    console.error('Mark message read failed:', error);
+    throw error;
+  }
 };

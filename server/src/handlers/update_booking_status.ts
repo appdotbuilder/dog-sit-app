@@ -1,26 +1,47 @@
+import { db } from '../db';
+import { bookingsTable } from '../db/schema';
 import { type UpdateBookingStatusInput, type Booking } from '../schema';
+import { eq } from 'drizzle-orm';
 
 export const updateBookingStatus = async (input: UpdateBookingStatusInput): Promise<Booking> => {
-    // This is a placeholder declaration! Real code should be implemented here.
-    // The goal of this handler is updating booking status (accept/reject/complete/cancel) in the database.
-    // Should validate that the user has permission to update the booking status.
-    // Should send notifications to relevant parties when status changes.
-    return Promise.resolve({
-        id: input.id,
-        owner_id: 1, // Placeholder
-        sitter_id: 2, // Placeholder
-        dog_id: 1, // Placeholder
-        listing_id: 1, // Placeholder
-        service_type: 'dog_walking' as const,
-        start_date: new Date(),
-        end_date: new Date(),
-        total_hours: 2,
-        total_days: null,
-        total_price: 40,
-        status: input.status,
-        special_requests: null,
-        notes: input.notes || null,
-        created_at: new Date(),
-        updated_at: new Date()
-    } as Booking);
+  try {
+    // Check if booking exists first
+    const existingBooking = await db.select()
+      .from(bookingsTable)
+      .where(eq(bookingsTable.id, input.id))
+      .execute();
+
+    if (existingBooking.length === 0) {
+      throw new Error(`Booking with id ${input.id} not found`);
+    }
+
+    // Update booking status and notes
+    const updateData: any = {
+      status: input.status,
+      updated_at: new Date()
+    };
+
+    // Add notes if provided
+    if (input.notes !== undefined) {
+      updateData.notes = input.notes;
+    }
+
+    // Update the booking record
+    const result = await db.update(bookingsTable)
+      .set(updateData)
+      .where(eq(bookingsTable.id, input.id))
+      .returning()
+      .execute();
+
+    // Convert numeric fields back to numbers before returning
+    const booking = result[0];
+    return {
+      ...booking,
+      total_hours: booking.total_hours ? parseFloat(booking.total_hours) : null,
+      total_price: parseFloat(booking.total_price)
+    };
+  } catch (error) {
+    console.error('Booking status update failed:', error);
+    throw error;
+  }
 };
